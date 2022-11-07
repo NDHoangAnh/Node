@@ -7,7 +7,7 @@ let getHomepage = (req, res) => {
     connection.query(
         'SELECT * FROM `users` ',
         function (err, results, fields) {
-            console.log('check mysql');
+            // console.log('check mysql');
             console.log(results); // results contains rows returned by server
             // gán data bằng các row đã tạo trên db
             results.map((row) => {
@@ -22,7 +22,7 @@ let getHomepage = (req, res) => {
             // sử dụng stringify để chuyển từ object -> string
             // dùng biến dataUser để truyền sang view
             // hiển thị ở file index.ejs
-            return res.render('test/index.ejs', { dataUser: JSON.stringify(data) });
+            return res.render('index.ejs', { dataUser: data, test: 'abc string test' });
             //console.log(fields); // fields contains extra meta data about results, if available
         }
     );
