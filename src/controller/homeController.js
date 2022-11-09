@@ -47,16 +47,38 @@ let getDetailPage = async (req, res) => {
 }
 
 let createNewUser = async (req, res) => {
-    console.log('check request', req.body);
+    // console.log('check request', req.body);
     // req.body là các request được gửi lên server
     let { firstName, lastName, email, address } = req.body;
     await pool.execute('insert into users(firstName, lastName, email, address) values (?,?,?,?)', [firstName, lastName, email, address]);
     //return res.send('call post create new user');
 
     // sau khi gửi xong các request, sử dụng redirect để hướng lại về trang home (route đầu tiên)
+    return res.redirect('/');
+}
+
+let deleteUser = async (req, res) => {
+    let userId = req.body.userId;
+    await pool.execute('delete from users where id=?', [userId])
+    // req.body có các request gửi lên, trong đó có userId (khi delete)
+    return res.redirect('/')
+}
+
+let getEditPage = async (req, res) => {
+    let id = req.params.id;
+    let [user] = await pool.execute('select * from users where id = ?', [id])
+    //return res.send(JSON.stringify(user));
+    return res.render('update.ejs', { dataUser: user[0] });
+}
+
+let postUpdateUser = async (req, res) => {
+    // console.log('check request:', req.body);
+    let { firstName, lastName, email, address, id } = req.body;
+    let [user] = await pool.execute('update users set firstName = ? , lastName = ?, email = ?, address = ? where id = ?', [firstName, lastName, email, address, id]);
+
     return res.redirect('/')
 }
 
 module.exports = {
-    getHomepage, getDetailPage, createNewUser
+    getHomepage, getDetailPage, createNewUser, deleteUser, getEditPage, postUpdateUser
 }
