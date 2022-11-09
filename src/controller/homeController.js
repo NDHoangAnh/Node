@@ -46,6 +46,17 @@ let getDetailPage = async (req, res) => {
     return res.send(JSON.stringify(user))
 }
 
+let createNewUser = async (req, res) => {
+    console.log('check request', req.body);
+    // req.body là các request được gửi lên server
+    let { firstName, lastName, email, address } = req.body;
+    await pool.execute('insert into users(firstName, lastName, email, address) values (?,?,?,?)', [firstName, lastName, email, address]);
+    //return res.send('call post create new user');
+
+    // sau khi gửi xong các request, sử dụng redirect để hướng lại về trang home (route đầu tiên)
+    return res.redirect('/')
+}
+
 module.exports = {
-    getHomepage, getDetailPage
+    getHomepage, getDetailPage, createNewUser
 }

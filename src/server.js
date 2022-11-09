@@ -10,6 +10,10 @@ require('dotenv').config();
 const app = express()  // gọi hàm express vào tạo hàm app
 const port = process.env.PORT || 3000;   // cổng trên local
 
+// giản lược hóa data gửi lên server, sử dụng phương thức post
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 //setup view engine
 configViewEngine(app);
 
