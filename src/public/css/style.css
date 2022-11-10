@@ -63,3 +63,11 @@ body {
     margin-top: 10px;
     cursor: pointer;
 }
+
+.upload-file-container {
+    padding: 15px;
+}
+
+.upload-file-container label {
+    display: block;
+}
