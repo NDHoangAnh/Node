@@ -36,6 +36,14 @@ body {
     color: white;
 }
 
+a.btn-detail {
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px;
+    display: block;
+}
+
 .create-user-container label {
     display: block;
 }
@@ -70,4 +78,12 @@ body {
 
 .upload-file-container label {
     display: block;
+}
+
+.upload-file-container h1 {
+    margin-top: 15px;
+}
+
+hr {
+    border-top: 3px solid #eee !important;
 }

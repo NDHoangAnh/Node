@@ -29,6 +29,7 @@ const imageFilter = function (req, file, cb) {
 
 let upload = multer({ storage: storage, fileFilter: imageFilter });
 
+let upload1 = multer({ storage: storage, fileFilter: imageFilter }).array('multiple_images', 3);
 // app ở đây chính là express app (được tạo trong file server.js)
 const initWebRoute = (app) => {
 
@@ -47,6 +48,19 @@ const initWebRoute = (app) => {
     router.get('/upload', homeController.getUploadFilePage)
 
     router.post('/upload-profile-pic', upload.single('profile_pic'), homeController.handleUploadFile)
+
+    router.post('/upload-multiple-images', (req, res, next) =>
+        upload1(req, res, (err) => {
+            if (err instanceof multer.MulterError) {
+                return res.send(err);
+            }
+            else if (err) {
+                return res.send(err);
+            } else {
+                next();
+            }
+        })
+        , homeController.handleUploadMultipleFile)
 
     router.get('/about', (req, res) => {
         res.send('I\'m Hoang Anh')
