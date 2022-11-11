@@ -5,12 +5,20 @@ import initApiRoute from './route/api'
 // import connection from './configs/connectDB'
 require('dotenv').config();
 
+var morgan = require('morgan');
+
 // const express = require('express'); // tương tự import thư viện express
 // const path = require('path');
 
 const app = express()  // gọi hàm express vào tạo hàm app
 const port = process.env.PORT || 3000;   // cổng trên local
 
+app.use((req, res, next) => {
+    console.log(req.method);
+    next();
+})
+
+app.use(morgan('combined'))
 // giản lược hóa data gửi lên server, sử dụng phương thức post
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -42,6 +50,11 @@ initWebRoute(app)
 
 // init API route
 initApiRoute(app)
+
+// handle 404 not found
+app.use((req, res) => {
+    res.render('404.ejs')
+})
 
 // name.listen(port, callback)
 app.listen(port, () => {
